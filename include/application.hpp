@@ -39,9 +39,10 @@ public:
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 			if (cpu_temp_file) {
 				getline(cpu_temp_file, cpu_temp);
-				// TODO: Parse temp and send it to socket
+				// TODO: Process temp and send it to socket
 			} else {
-				spdlog::critical(cpu_temp_file.rdstate());
+				spdlog::critical("Failed to read cpu temp file, status flags: " +
+				                  std::to_string(cpu_temp_file.rdstate()));
 				running = false;
 			}
 		}
