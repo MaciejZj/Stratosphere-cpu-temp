@@ -3,13 +3,14 @@
 #include "spdlog/sinks/basic_file_sink.h"
 #include <fstream>
 #include <thread>
+#include <string>
 #include <csignal>
 
 class Application {
 private:
 	inline static bool running = false;
 	std::fstream cpu_temp_file;
-	
+
 	static void termination_handler(int) {
 		spdlog::info("Termination requested");
 		running = false;
@@ -33,7 +34,7 @@ public:
 		init_signals();
 		spdlog::info("Starting app...");
 		
-		myfile.open("example.txt", std::fstream::in);
+		myfile.open("/sys/class/thermal/thermal_zone0/temp", std::fstream::in);
 		
 		while (running) {
 			std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -50,5 +51,4 @@ public:
 		cpu_temp_file.close();
 		return 0;
 	}
-
 };
