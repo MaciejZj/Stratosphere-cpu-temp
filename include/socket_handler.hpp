@@ -24,5 +24,5 @@ class Socket_handler {
 	public:
 		Socket_handler();
 		~Socket_handler();
-		void publish();
+		void publish(std::string data);
 };
