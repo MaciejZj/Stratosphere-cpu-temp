@@ -51,7 +51,7 @@ public:
 			if (cpu_temp_file) {
 				getline(cpu_temp_file, cpu_temp);
 				cpu_temp_file.seekg(0, std::ios::beg);
-				socket_handler.publish(cpu_temp);
+				socket_handler->publish(cpu_temp);
 			} else {
 				spdlog::critical("Failed to read cpu temp file, status flags: " +
 				                  std::to_string(cpu_temp_file.rdstate()));
