@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+*bin/*
 
 # System files
-.DS_Store
+*.DS_Store
+*.dSYM
