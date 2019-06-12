@@ -28,18 +28,22 @@ public:
 	}
 	
 	int exec() {
-		string cpu_temp;
+		std::string cpu_temp;
 		
 		init_log();
 		init_signals();
 		spdlog::info("Starting app...");
 		
-		myfile.open("/sys/class/thermal/thermal_zone0/temp", std::fstream::in);
+		cpu_temp_file.open("/sys/class/thermal/thermal_zone0/temp", 
+		                   std::fstream::in);
+		running = true;
 		
 		while (running) {
 			std::this_thread::sleep_for(std::chrono::seconds(1));
+			cpu_temp_file.flush();
 			if (cpu_temp_file) {
 				getline(cpu_temp_file, cpu_temp);
+				cpu_temp_file.seekg(0, std::ios::beg);
 				// TODO: Process temp and send it to socket
 			} else {
 				spdlog::critical("Failed to read cpu temp file, status flags: " +
