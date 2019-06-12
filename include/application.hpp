@@ -1,6 +1,7 @@
 #pragma once
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/basic_file_sink.h"
+#include "socket_handler.hpp"
 #include <fstream>
 #include <thread>
 #include <string>
@@ -10,6 +11,7 @@ class Application {
 private:
 	inline static bool running = false;
 	std::fstream cpu_temp_file;
+	Socket_handler* socket_handler;
 
 	static void termination_handler(int) {
 		spdlog::info("Termination requested");
@@ -36,7 +38,12 @@ public:
 		
 		cpu_temp_file.open("/sys/class/thermal/thermal_zone0/temp", 
 		                   std::fstream::in);
-		running = true;
+		try {
+			socket_handler = new socket_handler();
+			running = true;
+		} catch (const std::exception& e) {
+			spdlog::error(e.what());
+		}
 		
 		while (running) {
 			std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -44,7 +51,7 @@ public:
 			if (cpu_temp_file) {
 				getline(cpu_temp_file, cpu_temp);
 				cpu_temp_file.seekg(0, std::ios::beg);
-				// TODO: Process temp and send it to socket
+				socket_handler.publish(cpu_temp);
 			} else {
 				spdlog::critical("Failed to read cpu temp file, status flags: " +
 				                  std::to_string(cpu_temp_file.rdstate()));
