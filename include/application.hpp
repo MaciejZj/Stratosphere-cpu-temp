@@ -39,7 +39,7 @@ public:
 		cpu_temp_file.open("/sys/class/thermal/thermal_zone0/temp", 
 		                   std::fstream::in);
 		try {
-			socket_handler = new socket_handler();
+			socket_handler = new Socket_handler();
 			running = true;
 		} catch (const std::exception& e) {
 			spdlog::error(e.what());

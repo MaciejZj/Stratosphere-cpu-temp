@@ -1,4 +1,6 @@
+#include "socket_handler.hpp"
 #include "spdlog/spdlog.h"
+#include <sstream>
 #include <libconfig.h++>
 
 Socket_handler::Socket_handler() {
@@ -41,13 +43,16 @@ Socket_handler::~Socket_handler() {
 	context.close();
 }
 
-cpu_temp_frame_t process_data(std::string data) {
+cpu_temp_frame_t Socket_handler::process_data(std::string data) {
+	float temperature;
+	
 	try {
-		cpu_temp_frame_t cpu_temp_frame(std::stof(data));
+		temperature = std::stof(data);
 	} catch (const std::exception& e) {
 		spdlog::error(e.what());
 	}
 
+	cpu_temp_frame_t cpu_temp_frame(temperature);
 	return cpu_temp_frame;
 }
 
@@ -63,7 +68,7 @@ void Socket_handler::send_data(cpu_temp_frame_t& cpu_temp_frame) {
 	}
 }
 
-void publish(std::string data) {
+void Socket_handler::publish(std::string data) {
 	auto frame = process_data(data);
 	try {
 		send_data(frame);

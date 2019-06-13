@@ -1,7 +1,7 @@
 #pragma once
 #include <zmq.hpp>
 #include <string>
-#include "gpsframe.hpp"
+#include "cpu_temp_frame.hpp"
 
 class config_error : public std::runtime_error {
 	public:
