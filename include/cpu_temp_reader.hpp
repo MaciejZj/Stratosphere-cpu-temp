@@ -11,5 +11,5 @@ class Cpu_temp_reader {
 		cpu_temp_frame_t read();
 		
 	private:
-		std::fstream cpu_temp_file;
+		std::ifstream cpu_temp_file;
 };

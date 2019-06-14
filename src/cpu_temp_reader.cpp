@@ -11,7 +11,6 @@ Cpu_temp_reader::~Cpu_temp_reader() {
 
 cpu_temp_frame_t Cpu_temp_reader::read() {
 	std::string readout;
-	cpu_temp_file.flush();
 	cpu_temp_file >> readout;
 	cpu_temp_file.seekg(0, std::ios::beg);
 	return build_frame(readout);
