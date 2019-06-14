@@ -1,6 +1,7 @@
 #pragma once
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/basic_file_sink.h"
+#include "cpu_temp_reader.hpp"
 #include "socket_handler.hpp"
 #include <fstream>
 #include <thread>
@@ -10,7 +11,7 @@
 class Application {
 private:
 	inline static bool running = false;
-	std::fstream cpu_temp_file;
+	Cpu_temp_reader* cpu_temp_reader;
 	Socket_handler* socket_handler;
 
 	static void termination_handler(int) {
@@ -30,16 +31,15 @@ public:
 	}
 	
 	int exec() {
-		std::string cpu_temp;
+		cpu_temp_frame_t cpu_temp_frame;
 		
 		init_log();
 		init_signals();
 		spdlog::info("Starting app...");
 		
-		cpu_temp_file.open("/sys/class/thermal/thermal_zone0/temp", 
-		                   std::fstream::in);
 		try {
 			socket_handler = new Socket_handler();
+			cpu_temp_reader = new Cpu_temp_reader("/sys/class/thermal/thermal_zone0/temp");
 			running = true;
 		} catch (const std::exception& e) {
 			spdlog::error(e.what());
@@ -47,19 +47,16 @@ public:
 		
 		while (running) {
 			std::this_thread::sleep_for(std::chrono::seconds(1));
-			cpu_temp_file.flush();
-			if (cpu_temp_file) {
-				getline(cpu_temp_file, cpu_temp);
-				cpu_temp_file.seekg(0, std::ios::beg);
-				socket_handler->publish(cpu_temp);
-			} else {
-				spdlog::critical("Failed to read cpu temp file, status flags: " +
-				                  std::to_string(cpu_temp_file.rdstate()));
+
+			try {
+				cpu_temp_frame = cpu_temp_reader->read();
+				socket_handler->publish(cpu_temp_frame);
+			} catch (const std::exception& e) {
+				spdlog::error(e.what());
 				running = false;
 			}
 		}
 		
-		cpu_temp_file.close();
 		return 0;
 	}
 };
