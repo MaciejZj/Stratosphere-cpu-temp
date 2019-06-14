@@ -1,0 +1,10 @@
+[Unit]
+Description=Stratosphere balloon cpu temperature service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=root
+ExecStart=/usr/bin/sp-cpu_temp
