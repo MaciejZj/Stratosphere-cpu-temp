@@ -11,13 +11,13 @@ Cpu_temp_reader::~Cpu_temp_reader() {
 
 cpu_temp_frame_t Cpu_temp_reader::read() {
 	std::string readout;
-	file.flush();
-	file >> readout;
-	file.seekg(0, std::ios::beg);
+	cpu_temp_file.flush();
+	cpu_temp_file >> readout;
+	cpu_temp_file.seekg(0, std::ios::beg);
 	return build_frame(readout);
 }
 
-inline static cpu_temp_frame_t Cpu_temp_reader::build_frame(std::string data) {
+cpu_temp_frame_t Cpu_temp_reader::build_frame(std::string data) {
 	float temperature = std::stof(data)/1000;
 	return cpu_temp_frame_t(temperature);
 }
