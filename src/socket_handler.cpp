@@ -43,22 +43,9 @@ Socket_handler::~Socket_handler() {
 	context.close();
 }
 
-cpu_temp_frame_t Socket_handler::process_data(std::string data) {
-	float temperature;
-	
-	try {
-		temperature = std::stof(data);
-	} catch (const std::exception& e) {
-		spdlog::error(e.what());
-	}
-
-	cpu_temp_frame_t cpu_temp_frame(temperature);
-	return cpu_temp_frame;
-}
-
-void Socket_handler::send_data(cpu_temp_frame_t& cpu_temp_frame) {
+void Socket_handler::send_data(cpu_temp_frame_t& frame) {
 	std::string topic = "cpu_temp";
-	zmq::message_t msg(&cpu_temp_frame, sizeof(cpu_temp_frame));   
+	zmq::message_t msg(&frame, sizeof(frame));   
 	
 	try {
 		socket->send(topic.begin(), topic.end(), ZMQ_SNDMORE);
@@ -68,8 +55,7 @@ void Socket_handler::send_data(cpu_temp_frame_t& cpu_temp_frame) {
 	}
 }
 
-void Socket_handler::publish(std::string data) {
-	auto frame = process_data(data);
+void Socket_handler::publish(cpu_temp_frame_t& frame) {
 	try {
 		send_data(frame);
 	} catch (const network_error& e) {
