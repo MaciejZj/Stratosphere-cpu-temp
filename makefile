@@ -25,8 +25,7 @@ clean:
 install:
 	sudo cp ./$(BIN)/$(EXECUTABLE) /usr/bin/sp-cpu_temp
 	sudo mkdir -p /etc/sp
-	sudo cp sp.cfg /etc/sp/
 	sudo cp sp-cpu_temp.service /etc/systemd/system/
 
 uninstall:
-	sudo rm /usr/bin/sp-cpu_temp /etc/sp/sp.cfg /etc/systemd/system/sp-cpu_temp.service
+	sudo rm /usr/bin/sp-cpu_temp /etc/systemd/system/sp-cpu_temp.service

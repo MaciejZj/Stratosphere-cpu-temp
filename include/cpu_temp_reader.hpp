@@ -1,4 +1,4 @@
-#include "cpu_temp_frame.hpp"
+#include "strato-frames/cpu_temp_frame.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
