@@ -21,7 +21,7 @@ private:
 	
 public:
 	void init_log() {
-		auto file_logger = spdlog::basic_logger_mt("cpu_temp", "/tmp/cpu_temp.log");
+		auto file_logger = spdlog::basic_logger_mt("cpu_temp", "/var/log/balloon/cpu_temp.log");
 		spdlog::set_default_logger(file_logger);
 		spdlog::default_logger()->flush_on(spdlog::level::level_enum::info);
 	}

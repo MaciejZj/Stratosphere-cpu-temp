@@ -1,0 +1,6 @@
+[submodule "config"]
+	path = config
+	url = https://gitlab.com/pszemoc/strato-config.git
+[submodule "include/strato-frames"]
+	path = include/strato-frames
+	url = https://gitlab.com/pszemoc/strato-frames.git

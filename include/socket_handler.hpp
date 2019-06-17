@@ -1,7 +1,7 @@
 #pragma once
 #include <zmq.hpp>
 #include <string>
-#include "cpu_temp_frame.hpp"
+#include "strato-frames/cpu_temp_frame.hpp"
 
 class config_error : public std::runtime_error {
 	public:

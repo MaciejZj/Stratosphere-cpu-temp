@@ -6,7 +6,7 @@
 Socket_handler::Socket_handler() {
 	libconfig::Config cfg;
 	try {
-		cfg.readFile("/etc/sp/sp.cfg");
+		cfg.readFile("/etc/sp-config/sp.cfg");
 	} catch (const libconfig::FileIOException &fioex) {
 		throw config_error("I/O error while reading file.");
 	} catch (const libconfig::ParseException &pex) {
@@ -44,11 +44,10 @@ Socket_handler::~Socket_handler() {
 }
 
 void Socket_handler::send_data(cpu_temp_frame_t& frame) {
-	std::string topic = "cpu_temp";
 	zmq::message_t msg(&frame, sizeof(frame));   
 	
 	try {
-		socket->send(topic.begin(), topic.end(), ZMQ_SNDMORE);
+		socket->send(frame_topic::cpu_temp.begin(), frame_topic::cpu_temp.end(), ZMQ_SNDMORE);
 		socket->send(msg);
 	} catch (const zmq::error_t& e) {
 		throw network_error(e.what());
