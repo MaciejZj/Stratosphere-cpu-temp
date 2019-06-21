@@ -44,11 +44,9 @@ Socket_handler::~Socket_handler() {
 }
 
 void Socket_handler::send_data(cpu_temp_frame_t& frame) {
-	zmq::message_t msg(&frame, sizeof(frame));   
-	
 	try {
 		socket->send(frame_topic::cpu_temp.begin(), frame_topic::cpu_temp.end(), ZMQ_SNDMORE);
-		socket->send(msg);
+		socket->send(zmq::const_buffer(&frame, sizeof(frame)));
 	} catch (const zmq::error_t& e) {
 		throw network_error(e.what());
 	}
