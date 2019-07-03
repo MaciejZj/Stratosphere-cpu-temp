@@ -11,4 +11,3 @@ ExecStart=/usr/bin/sp-cpu_temp
 
 [Install]
 WantedBy=multi-user.target
-

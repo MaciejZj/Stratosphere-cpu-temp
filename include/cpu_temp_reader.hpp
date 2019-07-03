@@ -1,6 +1,5 @@
 #include "strato-frames/cpu_temp_frame.hpp"
 #include <fstream>
-#include <iostream>
 #include <string>
 
 class Cpu_temp_reader {
