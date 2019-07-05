@@ -33,7 +33,7 @@ public:
 	
 	void init_network_publisher() {
 		cpu_temp_publisher = std::make_unique<Publisher<cpu_temp_frame_t>>(
-			"sp.cfg", "cpu_temp", "cpu_temp_port", "cpu_temp");
+			"/etc/sp-config/sp.cfg", "cpu_temp", "cpu_temp_port", "cpu_temp");
 	}
 	
 	void init() {
@@ -45,6 +45,7 @@ public:
 			init_network_publisher();				
 			cpu_temp_reader = std::make_unique<Cpu_temp_reader>(
 				"/sys/class/thermal/thermal_zone0/temp");	
+			running = true;
 		} catch (const std::exception& e) {
 			spdlog::error(e.what());
 		}
