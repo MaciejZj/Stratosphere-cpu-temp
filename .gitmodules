@@ -6,4 +6,4 @@
 	url = https://gitlab.com/pszemoc/strato-frames.git
 [submodule "include/Strato-frames-publisher"]
 	path = include/Strato-frames-publisher
-	url = git@github.com:MaciejZj/Strato-frames-publisher.git
+	url = https://github.com/MaciejZj/Strato-frames-publisher.git
