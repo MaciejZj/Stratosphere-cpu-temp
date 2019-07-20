@@ -1,5 +1,5 @@
 [submodule "config"]
-	path = config
+	path = strato-config
 	url = https://gitlab.com/pszemoc/strato-config.git
 	branch = master
 [submodule "include/strato-frames"]
