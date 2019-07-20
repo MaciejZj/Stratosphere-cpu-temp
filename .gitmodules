@@ -1,10 +1,12 @@
 [submodule "config"]
 	path = config
 	url = https://gitlab.com/pszemoc/strato-config.git
+	branch = master
 [submodule "include/strato-frames"]
 	path = include/strato-frames
 	url = https://gitlab.com/pszemoc/strato-frames.git
-	
+	branch = master
 [submodule "include/strato-frames-publisher"]
 	path = include/strato-frames-publisher
 	url = https://github.com/MaciejZj/Strato-frames-publisher.git
+	branch = master
