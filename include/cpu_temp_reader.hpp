@@ -12,4 +12,3 @@ class Cpu_temp_reader {
 	std::ifstream cpu_temp_file;
 	inline static cpu_temp_frame_t build_frame(std::string data);
 };
-
